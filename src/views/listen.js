@@ -6,7 +6,7 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 @inject(SpeechService, EventAggregator)
 export class Listen {
 
-	@bindable transcripts;
+	@bindable transcripts = [];
 
 	constructor(speechService, eventAggregator) {
 		this.speechService = speechService;
@@ -15,12 +15,31 @@ export class Listen {
 		// Start automatically and never stop
 		this.speechService.start();
 		this.eventAggregator.subscribe(SpeechEvent, this.onSpeech.bind(this));
-		this.transcripts = [{}];
+	}
+
+	getCurrentTranscriptForSpeaker(speaker) {
+		let transcript = this.transcripts.find(function(transcript) {
+			if(transcript.speaker == speaker && !transcript.complete) {
+				return transcript;
+			}
+		});
+
+		if(!transcript) {
+			transcript = {
+				speaker: speaker
+			};
+			this.transcripts.push(transcript);
+		}
+
+		return transcript;
 	}
 
 	onSpeech(event) {
-		this.transcripts[0].speaker = "Speaker 1";
-		this.transcripts[0].text = event.transcript;
+		let transcript = this.getCurrentTranscriptForSpeaker(event.speaker);
+		if(event.final) {
+			transcript.complete = true;
+		}
+		transcript.text = event.transcript;
 	}
 
 }

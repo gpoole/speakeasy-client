@@ -26,6 +26,7 @@ export class DummySpeechRecogniser extends SpeechService {
 		setTimeout(() => {
 			let event = new SpeechEvent();
 			event.transcript = this.transcript[this.pos++];
+			event.speaker = "Speaker 1";
 			if(this.pos >= this.transcript.length) {
 				this.pos = 0;
 				event.final = true
