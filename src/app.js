@@ -3,7 +3,7 @@ import 'bootstrap/css/bootstrap.css!';
 
 export class App {
   configureRouter(config, router){
-    config.title = 'Speaky';
+    config.title = 'Speakeasy';
     config.map([
       { route: [ 'listen', '' ],         name: 'listen',        moduleId: 'views/listen',        nav: true, title:'Listen' }
     ]);

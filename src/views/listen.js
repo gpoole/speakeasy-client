@@ -1,45 +1,41 @@
-import { inject, bindable } from 'aurelia-framework';
-import { SpeechService } from 'lib/speech-service';
-import { SpeechEvent } from 'lib/speech-event';
+import { inject, bindable, computedFrom } from 'aurelia-framework';
+import { Transcriber } from 'lib/transcriber';
 import { EventAggregator } from 'aurelia-event-aggregator';
 
-@inject(SpeechService, EventAggregator)
+@inject(Transcriber, EventAggregator)
 export class Listen {
 
 	@bindable transcripts = [];
 
-	constructor(speechService, eventAggregator) {
-		this.speechService = speechService;
+	running = false;
+
+	constructor(transcriber, eventAggregator) {
+		this.transcriber = transcriber;
 		this.eventAggregator = eventAggregator;
 
-		// Start automatically and never stop
-		this.speechService.start();
-		this.eventAggregator.subscribe(SpeechEvent, this.onSpeech.bind(this));
-	}
-
-	getCurrentTranscriptForSpeaker(speaker) {
-		let transcript = this.transcripts.find(function(transcript) {
-			if(transcript.speaker == speaker && !transcript.complete) {
-				return transcript;
-			}
+		this.eventAggregator.subscribe('transcriber:add', (transcript) => {
+			this.transcripts.push(transcript);
 		});
 
-		if(!transcript) {
-			transcript = {
-				speaker: speaker
-			};
-			this.transcripts.push(transcript);
-		}
+		this.eventAggregator.subscribe('transcriber:stop', () => {
+			this.running = false;
+		});
 
-		return transcript;
+		this.eventAggregator.subscribe('transcriber:start', () => {
+			this.running = true;
+		});
 	}
 
-	onSpeech(event) {
-		let transcript = this.getCurrentTranscriptForSpeaker(event.speaker);
-		if(event.final) {
-			transcript.complete = true;
-		}
-		transcript.text = event.transcript;
+	@computedFrom('running')
+	get stopped() {
+		return !this.running;
 	}
 
+	toggleListening() {
+		if(this.transcriber.running) {
+			this.transcriber.stop();
+		} else {
+			this.transcriber.start();
+		}
+	}
 }

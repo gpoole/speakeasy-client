@@ -18,7 +18,7 @@ export class SpeechService {
 	}
 
 	stop() {
-
+		this.running = false;
 	}
 
 	publish(event) {
