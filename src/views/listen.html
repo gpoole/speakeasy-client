@@ -1,0 +1,15 @@
+<template>
+	<div repeat.for="transcript of transcripts" class="panel panel-default">
+		<div class="panel-heading">${transcript.speaker}</div>
+		<div class="panel-body">
+			<div class="media">
+				<div class="media-left">
+					<i class="glyphicon glyphicon-user"></i>
+				</div>
+				<div class="media-body">
+					${transcript.text}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
