@@ -1,22 +1,19 @@
 {
-  "name": "aurelia-skeleton-navigation",
-  "version": "0.16.2",
-  "description": "A starter kit for building a standard navigation-style app with Aurelia.",
+  "name": "speakeasy",
+  "version": "0.0.1",
+  "description": "A prototype for speech recognition.",
   "keywords": [
     "aurelia",
     "navigation",
     "skeleton"
   ],
-  "homepage": "http://aurelia.io",
-  "bugs": {
-    "url": "https://github.com/aurelia/skeleton-navigation/issues"
-  },
+  "homepage": "",
   "license": "MIT",
-  "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
+  "author": "Greg Poole <gregory.poole@sydney.edu.au>",
   "main": "dist/commonjs/index.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/aurelia/skeleton-navigation"
+    "url": "http://github.com/gpoole/speakeasy"
   },
   "devDependencies": {
     "aurelia-tools": "^0.1.3",
