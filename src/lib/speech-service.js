@@ -29,6 +29,8 @@ export class SpeechService {
 		if(!transcript) {
 			transcript = new Transcript();
 			transcript.source = `speaker:${event.speaker}`;
+			transcript.type = Transcript.TYPE_SPEECH;
+			transcript.displayName = event.speaker;
 		}
 
 		if(event.final) {

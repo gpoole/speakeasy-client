@@ -1,5 +1,6 @@
 import { SpeechService } from 'lib/speech-service';
 import { SpeechEvent } from 'lib/speech-event';
+import { Transcript } from 'lib/transcript';
 
 export class Html5SpeechRecogniser extends SpeechService {
 
@@ -19,17 +20,20 @@ export class Html5SpeechRecogniser extends SpeechService {
 	start() {
 		super.start();
 		this.recognition.start();
+		this.transcriptStore.publish(new Transcript(this, "Starting speech recognition", Transcript.TYPE_SYSTEM));
 	}
 
 	stop() {
 		super.stop();
-		this.recognition.stop();	
+		this.recognition.stop();
+		this.transcriptStore.publish(new Transcript(this, "Stopping speech recognition", Transcript.TYPE_SYSTEM));
 	}
 
 	onResult(event) {
 		let ourEvent = new SpeechEvent();
 		ourEvent.transcript = event.results[0][0].transcript;
 		ourEvent.final =  event.results.final;
+		ourEvent.speaker = "Speaker 1";
 		this.publish(ourEvent);
 	}
 
@@ -38,8 +42,7 @@ export class Html5SpeechRecogniser extends SpeechService {
 	}
 
 	onEnd(event) {
-		console.log('end');
-		super.stop();
+		this.stop();
 	}
 
 }

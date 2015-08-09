@@ -1,5 +1,6 @@
 import { SpeechService } from 'lib/speech-service';
 import { SpeechEvent } from 'lib/speech-event';
+import { Transcript } from 'lib/transcript';
 
 export class DummySpeechRecogniser extends SpeechService {
 
@@ -19,7 +20,8 @@ export class DummySpeechRecogniser extends SpeechService {
 
 	start() {
 		super.start();
-		this.nextTimeout();	
+		this.nextTimeout();
+		this.transcriptStore.publish(new Transcript(this, "Starting dummy recogniser", Transcript.TYPE_SYSTEM));
 	}
 
 	nextTimeout() {

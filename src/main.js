@@ -8,8 +8,8 @@ export function configure(aurelia) {
     .developmentLogging()
     .plugin('aurelia-animator-css');
 
-  // aurelia.container.registerSingleton(SpeechService, Html5SpeechRecogniser);
-  aurelia.container.registerSingleton(SpeechService, DummySpeechRecogniser);
+  aurelia.container.registerSingleton(SpeechService, Html5SpeechRecogniser);
+  // aurelia.container.registerSingleton(SpeechService, DummySpeechRecogniser);
 
   aurelia.start().then(a => a.setRoot());
 }
