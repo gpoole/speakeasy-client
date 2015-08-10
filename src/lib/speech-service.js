@@ -23,22 +23,4 @@ export class SpeechService {
 		this.running = false;
 	}
 
-	publish(event) {
-		let transcript = this.transcriptStore.getCurrentForSource(`speaker:${event.speaker}`);
-
-		if(!transcript) {
-			transcript = new Transcript();
-			transcript.source = `speaker:${event.speaker}`;
-			transcript.type = Transcript.TYPE_SPEECH;
-			transcript.displayName = event.speaker;
-		}
-
-		if(event.final) {
-			transcript.final = true;
-		}
-		transcript.text = event.transcript;
-
-		this.transcriptStore.publish(transcript);
-	}
-
 }

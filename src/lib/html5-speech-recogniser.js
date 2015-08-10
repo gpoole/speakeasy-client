@@ -1,8 +1,11 @@
 import { SpeechService } from 'lib/speech-service';
-import { SpeechEvent } from 'lib/speech-event';
 import { Transcript } from 'lib/transcript';
 
 export class Html5SpeechRecogniser extends SpeechService {
+
+	debug = null;
+
+	currentResultIndex = 0;
 
 	init() {
 		this.recognition = new webkitSpeechRecognition();
@@ -19,6 +22,7 @@ export class Html5SpeechRecogniser extends SpeechService {
 
 	start() {
 		super.start();
+		this.currentResultIndex = 0;
 		this.recognition.start();
 		this.transcriptStore.publish(new Transcript(this, "Starting speech recognition", Transcript.TYPE_SYSTEM));
 	}
@@ -30,15 +34,28 @@ export class Html5SpeechRecogniser extends SpeechService {
 	}
 
 	onResult(event) {
-		let ourEvent = new SpeechEvent();
-		ourEvent.transcript = event.results[0][0].transcript;
-		ourEvent.final =  event.results.final;
-		ourEvent.speaker = "Speaker 1";
-		this.publish(ourEvent);
+		let transcript = this.transcriptStore.getCurrentForSource(`speaker:${event.speaker}`);
+
+		if(!transcript) {
+			transcript = new Transcript();
+			transcript.source = `speaker:${event.speaker}`;
+			transcript.type = Transcript.TYPE_SPEECH;
+			transcript.displayName = "Speaker 1";
+		}
+
+		transcript.text = event.results[this.currentResultIndex][0].transcript;
+		if(event.results[this.currentResultIndex].isFinal) {
+			if(!transcript.final) {
+				transcript.final = true;
+			}
+			this.currentResultIndex++;
+		}
+
+		this.transcriptStore.publish(transcript);
 	}
 
 	onError(event) {
-		console.log(event);
+		this.transcriptStore.publish(new Transcript(this, `Error: ${event.message}`, Transcript.TYPE_ERROR));
 	}
 
 	onEnd(event) {

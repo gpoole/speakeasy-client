@@ -1,16 +1,17 @@
 import { SpeechService } from 'lib/speech-service';
-import { SpeechEvent } from 'lib/speech-event';
 import { Transcript } from 'lib/transcript';
 
 export class DummySpeechRecogniser extends SpeechService {
 
-	transcript = [
+	dummyText = [
 		"I",
 		"I am",
 		"I am testing",
 		"I am testing the speech",
 		"I am testing the speech recogniser"
 	];
+
+	currentTranscript;
 
 	pos = 0;
 
@@ -22,21 +23,26 @@ export class DummySpeechRecogniser extends SpeechService {
 		super.start();
 		this.nextTimeout();
 		this.transcriptStore.publish(new Transcript(this, "Starting dummy recogniser", Transcript.TYPE_SYSTEM));
+		this.pos = 0;
 	}
 
 	nextTimeout() {
 		setTimeout(() => {
-			let event = new SpeechEvent();
-			event.transcript = this.transcript[this.pos++];
-			event.speaker = "Speaker 1";
-			if(this.pos >= this.transcript.length) {
-				this.pos = 0;
-				event.final = true
+			if(!this.currentTranscript) {
+				this.currentTranscript = new Transcript(this, "", Transcript.TYPE_SPEECH, "Speaker 1", false);
 			}
-			this.publish(event);
+			this.currentTranscript.text = this.dummyText[this.pos++];
+			if(this.pos >= this.dummyText.length) {
+				this.pos = 0;
+				this.currentTranscript.final = true;
+			}
+			this.transcriptStore.publish(this.currentTranscript);
 
 			if(this.running) {
 				this.nextTimeout();
+				if(this.pos == 0) {
+					this.currentTranscript = null;
+				}
 			}
 		}.bind(this), Math.random() * 250 + 500);
 	}

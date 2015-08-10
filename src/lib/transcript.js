@@ -1,4 +1,5 @@
 export class Transcript {
+	id;
 	source;
 	displayName;
 	type;
@@ -19,5 +20,6 @@ export class Transcript {
 }
 
 Transcript.TYPE_SYSTEM = 'system';
+Transcript.TYPE_ERROR = 'error';
 Transcript.TYPE_SPEECH = 'speech';
 Transcript.TYPE_TEXT = 'text';
