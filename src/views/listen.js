@@ -15,6 +15,8 @@ export class Listen {
 		this.eventAggregator = eventAggregator;
 		this.speechService = speechService;
 
+		this.transcripts = this.transcriptStore.all();
+
 		this.eventAggregator.subscribe('transcript:added', (transcript) => {
 			this.transcripts.push(transcript);
 		});

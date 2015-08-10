@@ -21,6 +21,10 @@ export class TranscriptStore {
 		return transcript;
 	}
 
+	all() {
+		return this.transcripts.slice();
+	}
+
 	publish(transcript) {
 		transcript.lastModified = new Date();
 		if(this.transcripts.indexOf(transcript) == -1) {
