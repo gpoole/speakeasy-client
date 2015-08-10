@@ -13,6 +13,7 @@ export class Html5SpeechRecogniser extends SpeechService {
 		this.recognition.interimResults = true;
 		this.recognition.addEventListener('result', this.onResult.bind(this), true);
 		this.recognition.addEventListener('error', this.onError.bind(this), true);
+		this.recognition.addEventListener('end', this.onEnd.bind(this), true);
 
 		for(let event of [ 'audio', 'speech', 'sound' ]) {
 			this.recognition.addEventListener(`${event}start`, () => console.log(`${event}start`), true);
@@ -30,7 +31,6 @@ export class Html5SpeechRecogniser extends SpeechService {
 	stop() {
 		super.stop();
 		this.recognition.stop();
-		this.transcriptStore.publish(new Transcript(this, "Stopping speech recognition", Transcript.TYPE_SYSTEM));
 	}
 
 	onResult(event) {
@@ -55,11 +55,17 @@ export class Html5SpeechRecogniser extends SpeechService {
 	}
 
 	onError(event) {
-		this.transcriptStore.publish(new Transcript(this, `Error: ${event.message}`, Transcript.TYPE_ERROR));
+		let text = "Error: ";
+		if(event.message) {
+			text += `${event.message} (${event.error})`;
+		} else {
+			text += event.error;
+		}
+		this.transcriptStore.publish(new Transcript(this, text, Transcript.TYPE_ERROR));
 	}
 
 	onEnd(event) {
-		this.stop();
+		this.transcriptStore.publish(new Transcript(this, "Stopping speech recognition", Transcript.TYPE_SYSTEM));
 	}
 
 }

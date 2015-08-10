@@ -8,7 +8,7 @@ export class Listen {
 
 	@bindable transcripts = [];
 
-	running = false;
+	@bindable running = false;
 
 	constructor(eventAggregator, transcriptStore, speechService) {
 		this.transcriptStore = transcriptStore;
@@ -19,6 +19,15 @@ export class Listen {
 			this.transcripts.push(transcript);
 		});
 
+		this.eventAggregator.subscribe('speech:stopping', () => this.running = false);
+		this.eventAggregator.subscribe('speech:starting', () => this.running = true);
+	}
+
+	startListening() {
 		this.speechService.start();
+	}
+
+	stopListening() {
+		this.speechService.stop();
 	}
 }
