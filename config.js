@@ -44,6 +44,7 @@ System.config({
     "bootstrap": "github:twbs/bootstrap@3.3.5",
     "core-js": "npm:core-js@0.9.18",
     "css": "github:systemjs/plugin-css@0.1.13",
+    "dictate-js": "github:gpoole/dictate.js@master",
     "event-class": "npm:event-class@0.1.1",
     "fetch": "github:github/fetch@0.9.0",
     "font-awesome": "npm:font-awesome@4.4.0",
@@ -174,3 +175,12 @@ System.config({
   }
 });
 
+System.config({
+  "meta": {
+    "dictate-js/lib/dictate.js": {
+      "deps": [
+        "dictate-js/lib/recorder.js"
+      ]
+    }
+  }
+});

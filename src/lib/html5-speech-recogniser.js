@@ -34,7 +34,8 @@ export class Html5SpeechRecogniser extends SpeechService {
 	}
 
 	onResult(event) {
-		let transcript = this.transcriptStore.getCurrentForSource(`speaker:${event.speaker}`);
+		let speaker = 1;
+		let transcript = this.transcriptStore.getCurrentForSource(`speaker:${speaker}`);
 
 		if(!transcript) {
 			transcript = new Transcript();
