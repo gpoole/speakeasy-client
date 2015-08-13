@@ -11,7 +11,7 @@ To run the app, follow these steps.
 
   ```shell
   npm install
-  npm install -g gulp jspm
+  npm install -g gulp jspm@beta
   jspm install -y
   ```
 
