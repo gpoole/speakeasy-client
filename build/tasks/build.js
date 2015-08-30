@@ -11,7 +11,9 @@ var assign = Object.assign || require('object.assign');
 
 gulp.task('build-styles', function () {
   gulp.src(paths.style, { base: './' })
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sass({
+      includePaths: [ 'jspm_packages/github/twbs/bootstrap-sass@3.3.5/assets/stylesheets' ]
+    }).on('error', sass.logError))
     .pipe(gulp.dest(paths.output));
 });
 

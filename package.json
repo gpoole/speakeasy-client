@@ -67,12 +67,13 @@
       "aurelia-templating-binding": "github:aurelia/templating-binding@^0.13.2",
       "aurelia-templating-resources": "github:aurelia/templating-resources@^0.13.2",
       "aurelia-templating-router": "github:aurelia/templating-router@^0.14.1",
-      "bootstrap": "github:twbs/bootstrap@^3.3.4",
+      "bootstrap": "github:twbs/bootstrap-sass@^3.3.5",
       "core-js": "npm:core-js@^0.9.4",
       "css": "github:systemjs/plugin-css@^0.1.11",
       "event-class": "npm:event-class@^0.1.1",
       "fetch": "github:github/fetch@^0.9.0",
-      "font-awesome": "npm:font-awesome@^4.3.0"
+      "font-awesome": "npm:font-awesome@^4.3.0",
+      "twbs/bootstrap": "github:twbs/bootstrap@^3.3.4"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.1.13",
@@ -82,6 +83,23 @@
     "overrides": {
       "npm:core-js@0.9.18": {
         "main": "client/shim.min"
+      },
+      "github:twbs/bootstrap-sass@3.3.5": {
+        "main": "assets/javascripts/bootstrap",
+        "shim": {
+          "assets/javascripts/bootstrap": {
+            "deps": [
+              "jquery"
+            ],
+            "exports": "$"
+          }
+        },
+        "files": [
+          "assets"
+        ],
+        "dependencies": {
+          "jquery": "github:components/jquery"
+        }
       }
     }
   }
