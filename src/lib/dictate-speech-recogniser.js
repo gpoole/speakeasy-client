@@ -6,9 +6,9 @@ export class DictateSpeechRecogniser extends SpeechService {
 
 	init() {
 		this.dictate = new Dictate({
-			server: "ws://localhost:8000/client/ws/speech",
-			serverStatus: "ws://localhost:8000/client/ws/status",
-			referenceHandler: "ws://localhost:8000/client/ws/reference",
+			server: "ws://docker:32775/client/ws/speech",
+			serverStatus: "ws://docker:32775/client/ws/status",
+			referenceHandler: "ws://docker:32775/client/ws/reference",
 			onResults: this.onResults.bind(this, true),
 			onPartialResults: this.onResults.bind(this, false),
 			onError: this.onError.bind(this),

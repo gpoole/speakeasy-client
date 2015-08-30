@@ -4,9 +4,16 @@ var changed = require('gulp-changed');
 var plumber = require('gulp-plumber');
 var to5 = require('gulp-babel');
 var sourcemaps = require('gulp-sourcemaps');
+var sass = require('gulp-sass');
 var paths = require('../paths');
 var compilerOptions = require('../babel-options');
 var assign = Object.assign || require('object.assign');
+
+gulp.task('build-styles', function () {
+  gulp.src(paths.style, { base: './' })
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest(paths.output));
+});
 
 // transpiles changed es6 files to SystemJS format
 // the plumber() call prevents 'pipe breaking' caused
@@ -36,7 +43,7 @@ gulp.task('build-html', function () {
 gulp.task('build', function(callback) {
   return runSequence(
     'clean',
-    ['build-system', 'build-html'],
+    ['build-system', 'build-html', 'build-styles'],
     callback
   );
 });

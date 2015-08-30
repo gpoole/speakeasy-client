@@ -1,0 +1,10 @@
+<template>
+	<h1>Speakeasy</h1>
+	<nav class="menu">
+		<ul>
+			<li repeat.for="route of router.navigation" class="${route.isActive ? 'active' : ''}">
+				<a href.bind="route.href">${route.title}</a>
+			</li>
+		</ul>
+	</nav>
+</template>

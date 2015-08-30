@@ -7,6 +7,7 @@ export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
     .developmentLogging()
+    // .globalizeResources('views/components/menu')
     .plugin('aurelia-animator-css');
 
   // aurelia.container.registerSingleton(SpeechService, Html5SpeechRecogniser);
