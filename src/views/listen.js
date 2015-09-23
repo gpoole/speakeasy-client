@@ -23,9 +23,6 @@ export class Listen {
 
 		this.eventAggregator.subscribe('speech:stopping', () => this.running = false);
 		this.eventAggregator.subscribe('speech:starting', () => this.running = true);
-	}
-
-	startListening() {
 		this.speechService.start();
 	}
 

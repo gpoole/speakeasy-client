@@ -13,8 +13,20 @@ export class App {
 			route: ['listen'],
 			name: 'listen',
 			moduleId: 'views/listen',
+			nav: false,
+			title: 'Listen'
+		}, {
+			route: ['conversation'],
+			name: 'conversation',
+			moduleId: 'views/conversation',
 			nav: true,
 			title: 'Conversation'
+		}, {
+			route: ['settings'],
+			name: 'settings',
+			moduleId: 'views/settings',
+			nav: true,
+			title: 'Settings'
 		}]);
 
 		this.router = router;

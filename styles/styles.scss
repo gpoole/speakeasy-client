@@ -1,4 +1,10 @@
+@import 'variables';
 @import 'bootstrap';
+
+@import 'screen';
+@import 'menu';
+@import 'button';
+@import 'bubble';
 
 body {
   margin: 0;
