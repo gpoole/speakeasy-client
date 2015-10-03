@@ -7,7 +7,7 @@
 			</div>
 			<div class="panel-body">${transcript.text}</div>
 		</div> -->
-		<div repeat.for="transcript of transcripts" class="se-bubble msg-${transcript.type}">
+		<div repeat.for="transcript of transcripts" class="se-bubble se-msg-${transcript.type} se-speaker-${transcript.speaker.id}">
 			${transcript.text}
 		</div>
 	</div>

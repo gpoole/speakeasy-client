@@ -11,9 +11,9 @@ export class TranscriptStore {
 		this.eventAggregator = eventAggregator;
 	}
 
-	getCurrentForSource(source) {
+	getCurrentForSpeaker(speaker) {
 		let transcript = this.transcripts.find(function(transcript) {
-			if(transcript.source == source && !transcript.final) {
+			if(transcript.speaker.id == speaker.id && !transcript.final) {
 				return transcript;
 			}
 		});

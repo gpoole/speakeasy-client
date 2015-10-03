@@ -1,38 +1,52 @@
 import { Dictate } from 'dictate-js/lib/dictate';
 import { SpeechService } from 'lib/speech-service';
 import { Transcript } from 'lib/transcript';
+import { Config } from 'lib/config';
 
 export class DictateSpeechRecogniser extends SpeechService {
 
 	init() {
-		this.dictate = new Dictate({
-			server: "ws://docker:32775/client/ws/speech",
-			serverStatus: "ws://docker:32775/client/ws/status",
-			referenceHandler: "ws://docker:32775/client/ws/reference",
-			onResults: this.onResults.bind(this, true),
-			onPartialResults: this.onResults.bind(this, false),
-			onError: this.onError.bind(this),
-			recorderWorkerPath: '/jspm_packages/github/gpoole/dictate.js@master/lib/recorderWorker.js'
+		this.dictators = [];
+		MediaStreamTrack.getSources((sources) => {
+			let speakerCount = 0;
+			sources.forEach((sourceInfo) => {
+				if(sourceInfo.kind != 'audio') {
+					return;
+				}
+				let speakerId = ++speakerCount;
+				let dictate = new Dictate({
+					server: `ws://${Config.dicateRecogniser.endpoint}/client/ws/speech`,
+					serverStatus: `ws://${Config.dicateRecogniser.endpoint}/client/ws/status`,
+					referenceHandler: `ws://${Config.dicateRecogniser.endpoint}/client/ws/reference`,
+					audioSourceId: sourceInfo.id,
+					onResults: this.onResults.bind(this, dictate, speakerId, true),
+					onPartialResults: this.onResults.bind(this, dictate, speakerId, false),
+					onError: this.onError.bind(this, dictate, speakerId),
+					recorderWorkerPath: '/jspm_packages/github/gpoole/dictate.js@master/lib/recorderWorker.js'
+				});
+				this.dictators.push(dictate);
+			});
 		});
 	}
 
 	start() {
-		this.dictate.init(() => this.dictate.startListening());
+		this.dictate.init(() => {
+			this.dictators.forEach(Dictate.prototype.startListening.call);
+		});
 	}
 
 	stop() {
-		this.dictate.stopListening();
+		this.dictators.forEach(Dictate.prototype.stopListening.call);
 	}
 
-	onResults(final, hypothesis) {
-		let speaker = 1;
-		let transcript = this.transcriptStore.getCurrentForSource(`speaker:${speaker}`);
+	onResults(dictate, speakerId, final, hypothesis) {
+		let transcript = this.transcriptStore.getCurrentForSpeaker({ id: speakerId });
 
 		if(!transcript) {
 			transcript = new Transcript();
-			transcript.source = `speaker:${speaker}`;
+			transcript.source = this;
+			transcript.speaker = { id: speakerId };
 			transcript.type = Transcript.TYPE_SPEECH;
-			transcript.displayName = "Speaker 1";
 		}
 
 		transcript.text = hypothesis[0].transcript;

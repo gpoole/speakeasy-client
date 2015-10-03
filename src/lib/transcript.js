@@ -8,10 +8,10 @@ export class Transcript {
 	created = new Date();
 	lastModified = new Date();
 
-	constructor(source, text, type, displayName, final, created, lastModified) {
+	constructor(source, text, type, speaker, final, created, lastModified) {
 		this.source = source;
 		this.text = text;
-		this.displayName = displayName;
+		this.speaker = speaker;
 		this.type = type;
 		this.final = final;
 		this.created = created;

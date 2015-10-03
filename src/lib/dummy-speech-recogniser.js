@@ -11,40 +11,44 @@ export class DummySpeechRecogniser extends SpeechService {
 		"I am testing the speech recogniser"
 	];
 
-	currentTranscript;
-
 	pos = 0;
 
 	init() {
-
+		this.transcripts = {};
+		this.currentPos = {};
 	}
 
 	start() {
 		super.start();
-		this.nextTimeout();
+		for(let i = 1; i <= 2; i++) {
+			this._generateRecogniser(i);
+		}
 		this.transcriptStore.publish(new Transcript(this, "Starting dummy recogniser", Transcript.TYPE_SYSTEM));
 		this.pos = 0;
 	}
 
-	nextTimeout() {
-		setTimeout(() => {
-			if(!this.currentTranscript) {
-				this.currentTranscript = new Transcript(this, "", Transcript.TYPE_SPEECH, "Speaker 1", false);
-			}
-			this.currentTranscript.text = this.dummyText[this.pos++];
-			if(this.pos >= this.dummyText.length) {
-				this.pos = 0;
-				this.currentTranscript.final = true;
-			}
-			this.transcriptStore.publish(this.currentTranscript);
-
-			if(this.running) {
-				this.nextTimeout();
-				if(this.pos == 0) {
-					this.currentTranscript = null;
+	_generateRecogniser(speaker) {
+		let nextBlock = () => {
+			setTimeout(() => {
+				if(!this.transcripts[speaker]) {
+					this.transcripts[speaker] = new Transcript(this, "", Transcript.TYPE_SPEECH, { id: speaker }, false);
+					this.currentPos[speaker] = 0;
 				}
-			}
-		}.bind(this), Math.random() * 250 + 500);
-	}
+				this.transcripts[speaker].text = this.dummyText[this.currentPos[speaker]++];
+				if(this.currentPos[speaker] >= this.dummyText.length) {
+					this.currentPos[speaker] = 0;
+					this.transcripts[speaker].final = true;
+				}
+				this.transcriptStore.publish(this.transcripts[speaker]);
 
+				if(this.running) {
+					nextBlock();
+					if(this.currentPos[speaker] == 0) {
+						this.transcripts[speaker] = null;
+					}
+				}
+			}, Math.random() * 250 + 500);
+		}
+		nextBlock();
+	}
 }
