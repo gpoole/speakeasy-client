@@ -6,33 +6,31 @@ import { Config } from 'lib/config';
 export class DictateSpeechRecogniser extends SpeechService {
 
 	init() {
+
+	}
+
+	start() {
 		this.dictators = [];
-		MediaStreamTrack.getSources((sources) => {
-			let speakerCount = 0;
-			sources.forEach((sourceInfo) => {
-				if(sourceInfo.kind != 'audio') {
-					return;
-				}
-				let speakerId = ++speakerCount;
+
+		for(let speakerId in Config.audioSources) {
+			let audioSourceId = Config.audioSources[speakerId];
+			if(audioSourceId != "") {
 				let dictate = new Dictate({
 					server: `ws://${Config.dicateRecogniser.endpoint}/client/ws/speech`,
 					serverStatus: `ws://${Config.dicateRecogniser.endpoint}/client/ws/status`,
 					referenceHandler: `ws://${Config.dicateRecogniser.endpoint}/client/ws/reference`,
-					audioSourceId: sourceInfo.id,
+					// audioSourceId: audioSourceId,
 					onResults: this.onResults.bind(this, dictate, speakerId, true),
 					onPartialResults: this.onResults.bind(this, dictate, speakerId, false),
-					onError: this.onError.bind(this, dictate, speakerId),
+					onError: this.onError.bind(this, dictate),
 					recorderWorkerPath: '/jspm_packages/github/gpoole/dictate.js@master/lib/recorderWorker.js'
 				});
 				this.dictators.push(dictate);
-			});
-		});
-	}
-
-	start() {
-		this.dictate.init(() => {
-			this.dictators.forEach(Dictate.prototype.startListening.call);
-		});
+				dictate.init(() => {
+					dictate.startListening()
+				});
+			}
+		}
 	}
 
 	stop() {
@@ -55,7 +53,7 @@ export class DictateSpeechRecogniser extends SpeechService {
 		this.transcriptStore.publish(transcript);
 	}
 
-	onError(type, message) {
+	onError(dictate, type, message) {
 		this.transcriptStore.publish(new Transcript(this, `Error: ${message} (${type})`, Transcript.TYPE_ERROR));
 	}
 

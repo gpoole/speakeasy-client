@@ -27,4 +27,17 @@ export class SpeechService {
 		this.running = false;
 	}
 
+	getAudioSources(cb) {
+		let audioSources = [];
+		MediaStreamTrack.getSources((sources) => {
+			sources.forEach((sourceInfo) => {
+				if(sourceInfo.kind != 'audio') {
+					return;
+				}
+				audioSources.push(sourceInfo);
+			});
+			cb(audioSources);
+		});
+	}
+
 }

@@ -1,11 +1,20 @@
 import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
+import { SpeechService } from 'lib/speech-service';
+import { Config } from 'lib/config';
 
-@inject(Router)
+@inject(Router, SpeechService)
 export class Settings {
 
-	constructor(router) {
+	constructor(router, speechService) {
 		this.router = router;
+		this.speechService = speechService;
+		this.config = Config;
+
+		this.audioSources = [];
+		speechService.getAudioSources((sources) => {
+			this.audioSources = sources;
+		});
 	}
 
 }

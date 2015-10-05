@@ -16,16 +16,6 @@ System.config({
 });
 
 System.config({
-  "meta": {
-    "dictate-js/lib/dictate.js": {
-      "deps": [
-        "dictate-js/lib/recorder.js"
-      ]
-    }
-  }
-});
-
-System.config({
   "map": {
     "aurelia-animator-css": "github:aurelia/animator-css@0.14.1",
     "aurelia-binding": "github:aurelia/binding@0.8.6",
@@ -195,3 +185,12 @@ System.config({
   }
 });
 
+System.config({
+  "meta": {
+    "dictate-js/lib/dictate.js": {
+      "deps": [
+        "dictate-js/lib/recorder.js"
+      ]
+    }
+  }
+});
