@@ -19,7 +19,7 @@ export class DictateSpeechRecogniser extends SpeechService {
 					server: `ws://${Config.dicateRecogniser.endpoint}/client/ws/speech`,
 					serverStatus: `ws://${Config.dicateRecogniser.endpoint}/client/ws/status`,
 					referenceHandler: `ws://${Config.dicateRecogniser.endpoint}/client/ws/reference`,
-					// audioSourceId: audioSourceId,
+					audioSourceId: audioSourceId,
 					onResults: this.onResults.bind(this, dictate, speakerId, true),
 					onPartialResults: this.onResults.bind(this, dictate, speakerId, false),
 					onError: this.onError.bind(this, dictate),

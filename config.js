@@ -16,16 +16,6 @@ System.config({
 });
 
 System.config({
-  "meta": {
-    "dictate-js/lib/dictate.js": {
-      "deps": [
-        "dictate-js/lib/recorder.js"
-      ]
-    }
-  }
-});
-
-System.config({
   "map": {
     "aurelia-animator-css": "github:aurelia/animator-css@0.14.1",
     "aurelia-binding": "github:aurelia/binding@0.8.6",
@@ -58,7 +48,6 @@ System.config({
     "event-class": "npm:event-class@0.1.1",
     "fetch": "github:github/fetch@0.9.0",
     "font-awesome": "npm:font-awesome@4.4.0",
-    "gpoole/dictate.js": "github:gpoole/dictate.js@master",
     "twbs/bootstrap": "github:twbs/bootstrap@3.3.5",
     "github:aurelia/animator-css@0.14.1": {
       "aurelia-metadata": "github:aurelia/metadata@0.7.3",
@@ -196,3 +185,12 @@ System.config({
   }
 });
 
+System.config({
+  "meta": {
+    "dictate-js/lib/dictate.js": {
+      "deps": [
+        "dictate-js/lib/recorder.js"
+      ]
+    }
+  }
+});
