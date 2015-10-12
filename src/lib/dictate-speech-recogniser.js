@@ -34,7 +34,7 @@ export class DictateSpeechRecogniser extends SpeechService {
 	}
 
 	stop() {
-		this.dictators.forEach(Dictate.prototype.stopListening.call);
+		this.dictators.forEach((dictator) => dictator.stopListening());
 	}
 
 	onResults(dictate, speakerId, final, hypothesis) {
