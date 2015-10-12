@@ -27,11 +27,12 @@ export class DictateSpeechRecogniser extends SpeechService {
 						// 3 == MSG_INIT_RECORDER
 						// Start listening as soon as we're ready with the user media
 						if(type == 3) {
-							this.startListening();
+							dictate.startListening();
 						}
-					}
+					},
 					recorderWorkerPath: '/jspm_packages/github/gpoole/dictate.js@master/lib/recorderWorker.js'
 				});
+				dictate.init();
 				this.dictators.push(dictate);
 			}
 		}
