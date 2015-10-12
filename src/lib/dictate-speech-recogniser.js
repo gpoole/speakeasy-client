@@ -23,12 +23,16 @@ export class DictateSpeechRecogniser extends SpeechService {
 					onResults: this.onResults.bind(this, dictate, speakerId, true),
 					onPartialResults: this.onResults.bind(this, dictate, speakerId, false),
 					onError: this.onError.bind(this, dictate),
+					onEvent: (type) => {
+						// 3 == MSG_INIT_RECORDER
+						// Start listening as soon as we're ready with the user media
+						if(type == 3) {
+							this.startListening();
+						}
+					}
 					recorderWorkerPath: '/jspm_packages/github/gpoole/dictate.js@master/lib/recorderWorker.js'
 				});
 				this.dictators.push(dictate);
-				dictate.init(() => {
-					dictate.startListening()
-				});
 			}
 		}
 	}
