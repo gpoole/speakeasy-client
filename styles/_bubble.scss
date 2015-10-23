@@ -3,6 +3,12 @@
 	margin-bottom: 20px;
 	border-radius: 10px;
 	position: relative;
+	opacity: 0;
+	transition: ease-in opacity 1s;
+
+	&.se-bubble-added {
+		opacity: 1;
+	}
 
 	&:after {
 		content: " ";
