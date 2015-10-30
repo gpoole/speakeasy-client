@@ -3,15 +3,17 @@ import { TranscriptStore } from 'lib/transcript-store';
 import { SpeechService } from 'lib/speech-service';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import $ from 'jquery';
+import { View } from '../view';
 
 @inject(EventAggregator, TranscriptStore, SpeechService)
-export class Listen {
+export class Listen extends View {
 
 	@bindable transcripts;
 
 	@bindable running = false;
 
 	constructor(eventAggregator, transcriptStore, speechService) {
+		super();
 		this.transcriptStore = transcriptStore;
 		this.eventAggregator = eventAggregator;
 		this.speechService = speechService;

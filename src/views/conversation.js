@@ -1,15 +1,13 @@
 import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
+import { View } from '../view';
 
 @inject(Router)
-export class Conversation {
+export class Conversation extends View {
 
 	constructor(router) {
+		super();
 		this.router = router;
-	}
-
-	startConversation() {
-		
 	}
 
 }

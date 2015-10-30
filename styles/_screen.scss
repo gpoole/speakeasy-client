@@ -1,5 +1,62 @@
-
-
 .se-screen {
+	width: 100%;
+	min-height: 100%;
+	border: 1px solid transparent;
+	padding-left: 20px;
+	padding-right: 20px;
+	transition: background-color 500ms ease-in;
+
+	&.se-screen-red {
+		background-color: $red;
+		border-color: $red;
+		color: $text-light;
+
+		a {
+			color: $text-light;
+		}
+	}
+
+	&.se-screen-blue {
+		background-color: $blue;
+		border-color: $blue;
+		color: $text-light;
+
+		a {
+			color: $text-light;
+		}
+	}
+
+	&.se-screen-orange {
+		background-color: $orange;
+		border-color: $orange;
+		color: $text-dark;
+
+		a {
+			color: $text-dark;
+		}
+	}
+
+	&.se-screen-grey {
+		background-color: $grey;
+		border-color: $grey;
+		color: $text-dark;
+	}
+
+	.se-screen-body {
+		transition: opacity 500ms linear, left 500ms ease-in;
+		left: 100%;
+		position: relative;
+		opacity: 0;
+
+		&.se-screen-body-entry {
+			opacity: 1;
+			left: 0;
+		}
+
+		&.se-screen-body-exit {
+			opacity: 0;
+			left: -100%;
+		}
+	}
 
 }
