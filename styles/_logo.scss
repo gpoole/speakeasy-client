@@ -1,0 +1,13 @@
+.se-logo {
+	font-size: 80px;
+
+	.se-logo-speak {
+		color: darken($red, 40%);
+	}
+
+	.se-logo-see {
+		// color: lighten($red, 35%);
+		color: white;
+		font-style: italic;
+	}
+}

@@ -4,39 +4,53 @@
 	border-radius: 10px;
 	position: relative;
 	opacity: 0;
-	transition: ease-in opacity 1s;
+	transition: opacity 500ms ease-in;
 
 	&.se-bubble-added {
 		opacity: 1;
 	}
 
-	&:after {
-		content: " ";
-		width: 0;
-		height: 0;
-		border-left: 7px solid transparent;
-		border-right: 7px solid transparent;
-		border-top: 7px solid transparent;
-		position: absolute;
-		bottom: -7px;
-		left: 15px;
+	&.se-msg-speech {
+		&:after {
+			content: " ";
+			width: 0;
+			height: 0;
+			border-left: 7px solid transparent;
+			border-right: 7px solid transparent;
+			border-top: 7px solid transparent;
+			position: absolute;
+			bottom: -7px;
+			left: 15px;
+		}
+	}
+
+	&.se-msg-system {
+		background-color: $gray-lighter;
+		color: $text-dark;
+	}
+
+	&:nth-child(even) {
+		&:after {
+			left: auto;
+			right: 15px;
+		}
 	}
 
 	&.se-speaker-1 {
-		background-color: $red;
-		color: $text-light;
+		background-color: $speaker-1-colour;
+		color: $speaker-1-text-colour;
 
 		&:after {
-			border-top-color: $red;
+			border-top-color: $speaker-1-colour;
 		}
 	}
 
 	&.se-speaker-2 {
-		background-color: $blue;
-		color: $text-dark;
+		background-color: $speaker-2-colour;
+		color: $speaker-2-text-colour;
 
 		&:after {
-			border-top-color: $blue;
+			border-top-color: $speaker-2-colour;
 		}
 	}
 }

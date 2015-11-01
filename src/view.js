@@ -14,7 +14,7 @@ export class View {
 		return new Promise((resolve) => {
 			setInterval(() => {
 				resolve(true);
-			}, 500);
+			}, 150);
 		});
 	}
 }

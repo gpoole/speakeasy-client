@@ -1,10 +1,11 @@
 .se-screen {
+	$animate-entry-time: 250ms;
 	width: 100%;
 	min-height: 100%;
 	border: 1px solid transparent;
 	padding-left: 20px;
 	padding-right: 20px;
-	transition: background-color 500ms ease-in;
+	transition: background-color $animate-entry-time ease-in;
 
 	&.se-screen-red {
 		background-color: $red;
@@ -43,10 +44,11 @@
 	}
 
 	.se-screen-body {
-		transition: opacity 500ms linear, left 500ms ease-in;
-		left: 100%;
+		transition: opacity $animate-entry-time ease-in, left $animate-entry-time ease-in;
+		left: 25%;
 		position: relative;
 		opacity: 0;
+		margin-top: 20px;
 
 		&.se-screen-body-entry {
 			opacity: 1;
@@ -55,7 +57,8 @@
 
 		&.se-screen-body-exit {
 			opacity: 0;
-			left: -100%;
+			left: -25%;
+			transition: opacity 150ms ease-out, left 150ms ease-out;
 		}
 	}
 

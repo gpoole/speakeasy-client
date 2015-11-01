@@ -1,3 +1,41 @@
 .se-button {
-	font-size: 20px;
+	font-size: $font-size-large;
+	display: inline-block;
+	border: 2px solid transparent;
+	border-radius: 3px;
+	padding: 7px;
+
+	.se-screen-red & {
+		color: $text-light;
+		border-color: $text-light;
+	}
+
+	.se-screen-blue & {
+		color: $text-light;
+		border-color: $text-light;
+	}
+
+	.se-screen-orange & {
+		color: $text-dark;
+		border-color: $text-dark;
+	}
+
+	.se-screen-grey & {
+		color: $text-dark;
+		border-color: $text-dark;
+	}
+
+	&.se-button-action {
+
+	}
+
+	&.se-button-cancel {
+		opacity: .75;
+	}
+}
+
+.se-button-strip {
+	.se-button {
+		margin-right: 10px;
+	}
 }

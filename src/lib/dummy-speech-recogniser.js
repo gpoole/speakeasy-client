@@ -21,9 +21,10 @@ export class DummySpeechRecogniser extends SpeechService {
 	start() {
 		super.start();
 		for(let i = 1; i <= 2; i++) {
-			this._generateRecogniser(i);
+			setTimeout(() => {
+				this._generateRecogniser(i);
+			}, 1000 + (Math.random() * 1000));
 		}
-		this.transcriptStore.publish(new Transcript(this, "Starting dummy recogniser", Transcript.TYPE_SYSTEM));
 		this.pos = 0;
 	}
 

@@ -1,0 +1,20 @@
+.se-speaker-status-list {
+	list-style-type: none;
+	padding-left: 0;
+
+	.se-speaker-disconnected {
+		opacity: 0.5;
+		
+		&:before {
+			@include icon('unchecked');
+			margin-right: 10px;
+		}
+	}
+
+	.se-speaker-connected {
+		&:before {
+			@include icon('check');
+			margin-right: 10px;
+		}
+	}
+}

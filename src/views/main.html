@@ -1,12 +1,15 @@
 <template>
 	<div class="se-screen-body ${bodyClass}">
-		<h1>Speakeasy</h1>
+		<h1 class="se-logo">
+			<span class="se-logo-speak">speak</span><span class="se-logo-see">see</span>
+		</h1>
 		<nav class="se-menu">
 			<ul>
-				<li repeat.for="route of router.navigation" class="${route.isActive ? 'active' : ''}">
-					<a href.bind="route.href">${route.title}</a>
-				</li>
+				<li><a href="${router.generate('conversation')}">Start a conversation</a></li>
+				<li><a href="${router.generate('settings')}">Settings</a></li>
 			</ul>
 		</nav>
+		<!-- <p><a href="${router.generate('conversation')}" class="se-button">Start a conversation</a></p>
+		<p><a href="${router.generate('settings')}" class="se-button">Settings</a></p> -->
 	</div>
 </template>

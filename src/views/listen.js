@@ -18,33 +18,44 @@ export class Listen extends View {
 		this.eventAggregator = eventAggregator;
 		this.speechService = speechService;
 
-		this.transcripts = this.transcriptStore.all();
+		// this.transcripts = this.transcriptStore.all();
+		this.bubbles = [];
 
 		this.disposeHandlers = [];
 
+		let currentBubble;
 		this.disposeHandlers.push(this.eventAggregator.subscribe('transcript:added', (transcript) => {
-			this.transcripts.push(transcript);
-			// FIXME: there's got to be a hook for the render update and a way to get the view's DOM
-			// element, but if there is I can't find it...
-			setTimeout(() => {
-				let lastBubble = $('.se-bubble:last');
-				lastBubble.addClass('se-bubble-added');
-				let bubbleBottom = lastBubble.offset().top + lastBubble.outerHeight();
+			if(!currentBubble || currentBubble.speaker.id != transcript.speaker.id) {
+				currentBubble = {
+					transcripts: [ transcript ],
+					extraClasses: '',
+					// This isn't quite right, since presumably different transcripts
+					// from the same speaker could have different types, but that's pretty
+					// hard to work with
+					type: transcript.type,
+					speaker: transcript.speaker
+				};
+			} else {
+				currentBubble.transcripts.push(transcript);
+			}
 
-				if(bubbleBottom > $(window).height()) {
-					$('body').animate({
-						scrollTop: lastBubble.offset().top
-					});
-				}
-			}, 0);
+			if(!(currentBubble in this.bubbles)) {
+				this.bubbles.push(currentBubble);
+			}
+
+			// Seems a little shady...
+			setTimeout(() => {
+				currentBubble.extraClasses = 'se-bubble-added';
+				$('body').animate({
+					scrollTop: $('body').outerHeight()
+				});
+			}, 5);
 		}));
 
 		this.disposeHandlers.push(this.eventAggregator.subscribe('speech:stopping', () => {
-			console.log("Speech recognition is stopping.");
 			this.running = false;
 		}));
 		this.disposeHandlers.push(this.eventAggregator.subscribe('speech:starting', () => {
-			console.log("Speech recognition is starting.");
 			this.running = true;
 		}));
 		this.speechService.start();
@@ -56,7 +67,7 @@ export class Listen extends View {
 
 	deactivate() {
 		this.stopListening();
-		this.transcripts = [];
+		this.bubbles = [];
 		this.disposeHandlers.forEach((disposeHandler) => disposeHandler());
 		this.disposeHandlers = [];
 	}

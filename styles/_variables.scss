@@ -1,4 +1,4 @@
-$red: #EE2626;
+$red: #DF4F40;
 $blue: #5BBEE4;
 $orange: #FFAB31;
 $grey: #F7FBFC;
@@ -11,3 +11,16 @@ $text-color: white;
 // $link-color: white;
 $link-hover-color: white;
 $link-hover-decoration: none;
+
+$font-size-base: 20px;
+
+$font-family-sans-serif: 'Open Sans', Helvetica, Arial, sans-serif;
+
+$speaker-1-colour: $red;
+$speaker-1-text-colour: $text-light;
+
+$speaker-2-colour: $blue;
+$speaker-2-text-colour: $text-dark;
+// $font-size-h1: floor(($font-size-base * 3.6));
+
+$icon-font-path: "../../jspm_packages/github/twbs/bootstrap-sass@3.3.5/assets/fonts/bootstrap/";
