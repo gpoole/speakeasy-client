@@ -46,8 +46,9 @@ export class Listen extends View {
 			// Seems a little shady...
 			setTimeout(() => {
 				currentBubble.extraClasses = 'se-bubble-added';
+				let lastBubble = $('.se-bubble:last');
 				$('body').animate({
-					scrollTop: $('body').outerHeight()
+					scrollTop: lastBubble.offset().top + lastBubble.outerHeight(true)
 				});
 			}, 5);
 		}));

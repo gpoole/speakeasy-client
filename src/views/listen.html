@@ -7,15 +7,15 @@
 			</div>
 			<div class="panel-body">${transcript.text}</div>
 		</div> -->
+		<div class="se-bubble se-msg-system se-bubble-added">
+			Speaksee is now listening...
+		</div>
 		<div if.bind="bubbles.length">
 			<div repeat.for="bubble of bubbles" class="se-bubble se-msg-${bubble.type} se-speaker-${bubble.speaker.id} ${bubble.extraClasses}">
 				<p repeat.for="transcript of bubble.transcripts">
 					${transcript.text}
 				</p>
 			</div>
-		</div>
-		<div if.bind="!bubbles.length">
-			Speaksee is now listening...
 		</div>
 	</div>
 </template>

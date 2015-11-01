@@ -6,6 +6,13 @@
 	opacity: 0;
 	transition: opacity 500ms ease-in;
 
+	p {
+		margin-bottom: 0;
+		+ p {
+			margin-top: $line-height-computed / 2;
+		}
+	}
+
 	&.se-bubble-added {
 		opacity: 1;
 	}
