@@ -11,8 +11,8 @@ export function configure(aurelia) {
     .plugin('aurelia-animator-css');
 
   // aurelia.container.registerSingleton(SpeechService, Html5SpeechRecogniser);
-  aurelia.container.registerSingleton(SpeechService, DummySpeechRecogniser);
-  // aurelia.container.registerSingleton(SpeechService, DictateSpeechRecogniser);
+  // aurelia.container.registerSingleton(SpeechService, DummySpeechRecogniser);
+  aurelia.container.registerSingleton(SpeechService, DictateSpeechRecogniser);
 
   aurelia.start().then(a => a.setRoot());
 }

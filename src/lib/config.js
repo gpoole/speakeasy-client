@@ -1,7 +1,7 @@
 let Config = {
 	dicateRecogniser: {
 		inputs: 1,
-		endpoint: "ec2-52-64-133-37.ap-southeast-2.compute.amazonaws.com:8000"
+		endpoint: "ec2-54-79-70-82.ap-southeast-2.compute.amazonaws.com:8000"
 	},
 	audioSources: {}
 };
