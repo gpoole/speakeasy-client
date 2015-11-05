@@ -27,7 +27,7 @@ export class Listen extends View {
 		let currentBubble;
 		this.disposeHandlers.push(this.eventAggregator.subscribe('transcript:added', (transcript) => {
 			let currentBubble = this.speakerBubbles[transcript.speaker.id];
-			if(!currentBubble || (new Date() - currentBubble.addedAt > 30000)) {
+			if(!currentBubble || (new Date() - currentBubble.lastUpdated > 2000)) {
 				currentBubble = {
 					transcripts: [ transcript ],
 					extraClasses: '',
@@ -36,11 +36,13 @@ export class Listen extends View {
 					// hard to work with
 					type: transcript.type,
 					speaker: transcript.speaker,
-					addedAt: new Date()
+					lastUpdated: new Date()
 				};
+				this.speakerBubbles[transcript.speaker.id] = currentBubble;
 				this.bubbles.push(currentBubble);
 			} else {
 				currentBubble.transcripts.push(transcript);
+				currentBubble.lastUpdated = new Date();
 			}
 
 			// Seems a little shady...
