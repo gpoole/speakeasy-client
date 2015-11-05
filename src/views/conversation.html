@@ -3,8 +3,7 @@
 		<h1>Conversation</h1>
 		<p>Make sure all microphones are connected and you're ready to go.</p>
 		<ul class="se-speaker-status-list">
-			<li class="se-speaker-1 se-speaker-connected">Speaker 1 is connected</li>
-			<li class="se-speaker-2 se-speaker-disconnected">Speaker 2 is not connected</li>
+			<li repeat.for="speaker of speakers" class="se-speaker-${speaker.id} se-speaker-${speaker.audioSourceId ? 'connected' : 'disconnected'}">Speaker ${speaker.id} is ${speaker.audioSourceId ? 'connected' : 'disconnected'}</li>
 		</ul>
 		<p class="se-button-strip">
 			<a class="se-button" href="${router.generate('listen')}">Start conversation</a>

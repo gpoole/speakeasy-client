@@ -42,4 +42,15 @@ export class SpeechService {
 		});
 	}
 
+	getConfiguredSpeakers() {
+		let speakers = [];
+		for(let speakerId in this.config.get('audioSources')) {
+			speakers.push({
+				id: speakerId,
+				audioSourceId: this.config.get('audioSources')[speakerId]
+			});
+		}
+		return speakers;
+	}
+
 }
