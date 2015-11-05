@@ -1,16 +1,18 @@
 import { inject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { TranscriptStore } from 'lib/transcript-store';
+import { Config } from 'lib/config';
 import { Transcript } from 'lib/transcript';
 
-@inject(TranscriptStore, EventAggregator)
+@inject(TranscriptStore, EventAggregator, Config)
 export class SpeechService {
 
 	running = false;
 
-	constructor(transcriptStore, eventAggregator) {
+	constructor(transcriptStore, eventAggregator, config) {
 		this.transcriptStore = transcriptStore;
 		this.eventAggregator = eventAggregator;
+		this.config = config;
 
 		if('init' in this && typeof this.init == 'function') {
 			this.init();

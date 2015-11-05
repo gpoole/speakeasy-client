@@ -5,7 +5,7 @@
 		<form action="#">
 			<div class="form-group">
 				<label for="audio-source-1">Speaker 1 audio source:</label>
-				<select name="audio-source-1" id="audio-source-1" class="form-control" value.bind="config.audioSources[1]">
+				<select name="audio-source-1" id="audio-source-1" class="form-control" change.delegate="changeSetting('audioSources.1', $event)" value.bind="audioSource1">
 					<option value="">Off</option>
 					<option value="${source.id}" repeat.for="source of audioSources">${source.label || "Microphone " + ($index + 1)}</option>
 				</select>
@@ -13,7 +13,7 @@
 
 			<div class="form-group">
 				<label for="audio-source-2">Speaker 2 audio source:</label>
-				<select name="audio-source-2" id="audio-source-2" class="form-control"  value.bind="config.audioSources[2]">
+				<select name="audio-source-2" id="audio-source-2" class="form-control"  change.delegate="changeSetting('audioSources.2', $event)"  value.bind="audioSource2">
 					<option value="">Off</option>
 					<option value="${source.id}" repeat.for="source of audioSources">${source.label || "Microphone " + ($index + 1)}</option>
 				</select>

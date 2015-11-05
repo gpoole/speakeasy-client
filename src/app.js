@@ -1,13 +1,15 @@
 import { inject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
+import { Config } from 'lib/config';
 // import $ from 'jquery';
 import 'bootstrap';
 
-@inject(EventAggregator)
+@inject(EventAggregator, Config)
 export class App {
-	constructor(eventAggregator) {
+	constructor(eventAggregator, config) {
 		this.eventAggregator = eventAggregator;
 		this.screenClass = "";
+		this.config = config;
 
 		this.eventAggregator.subscribe("router:navigation:success", (router) => {
 			this.screenClass = router.instruction.config.class;

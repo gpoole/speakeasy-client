@@ -12,13 +12,13 @@ export class DictateSpeechRecogniser extends SpeechService {
 	start() {
 		this.dictators = [];
 
-		for(let speakerId in Config.audioSources) {
-			let audioSourceId = Config.audioSources[speakerId];
+		for(let speakerId in this.config.get('audioSources')) {
+			let audioSourceId = this.config.get('audioSources')[speakerId];
 			if(audioSourceId != "") {
 				let dictate = new Dictate({
-					server: `ws://${Config.dicateRecogniser.endpoint}/client/ws/speech`,
-					serverStatus: `ws://${Config.dicateRecogniser.endpoint}/client/ws/status`,
-					referenceHandler: `ws://${Config.dicateRecogniser.endpoint}/client/ws/reference`,
+					server: `ws://${this.config.get('dicateRecogniser.endpoint')}/client/ws/speech`,
+					serverStatus: `ws://${this.config.get('dicateRecogniser.endpoint')}/client/ws/status`,
+					referenceHandler: `ws://${this.config.get('dicateRecogniser.endpoint')}/client/ws/reference`,
 					audioSourceId: audioSourceId,
 					onResults: this.onResults.bind(this, dictate, speakerId, true),
 					onPartialResults: this.onResults.bind(this, dictate, speakerId, false),
